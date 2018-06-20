@@ -21,6 +21,7 @@ public class MainActivity extends BaseActivity {
 
     ArrayList<ScheduleData> mArGrid = new ArrayList<ScheduleData>();
     ArrayList<ScheduleData> mArSchedule = null; //new ArrayList<ScheduleData>();
+    //ArrayList<ScheduleData> mArSchedule = new ArrayList<ScheduleData>();
     GridView mGridWeek;
     WeekInfo mWeekInfo;
     TextView mTextTitle;
