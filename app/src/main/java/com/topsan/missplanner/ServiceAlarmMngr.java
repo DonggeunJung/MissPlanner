@@ -14,7 +14,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 /**
- * Created by JDG on 2018-06-20.
+ * Created by Donggeun, Jung on 2018-06-19.
+ * Copyright © 2018 Dennis Jung. All rights reserved.
+ * Email : topsan72@gmail.com / Tel : 1-770-756-0073
  */
 
 public class ServiceAlarmMngr extends Service {
@@ -33,11 +35,9 @@ public class ServiceAlarmMngr extends Service {
 
     // Start Service Event
     public int onStartCommand(Intent intent, int flags, int startId){
-        Log.d("tag", "Start Service");
         self = this;
 
         mApp = (App) getApplication();
-        //mArSchedule = mApp.readAllRecords();
         mApp.readAllRecords(mArSchedule);
 
         if( MainActivity.self != null ) {
@@ -69,9 +69,6 @@ public class ServiceAlarmMngr extends Service {
             return;
 
         for( ScheduleData sd : mArSchedule ) {
-            //startAlarm(sd);
-            //return;
-
             if( sd.alarmType == ScheduleData.ALARM_NONE )
                 continue;
             // When Once Schedule
@@ -131,8 +128,6 @@ public class ServiceAlarmMngr extends Service {
         long timeNow = dateNow.getTimeInMillis();
         long timeItem = dateItem.getTimeInMillis();
 
-        Log.d("tag", "isScheduleSoon() - " + timeNow + " / " + (timeNow + ALARM_CHECK_INTERVER) + " / " + timeItem);
-        //return true;
         if( timeNow <= timeItem && timeItem < (timeNow + ALARM_CHECK_INTERVER) ) {
             return true;
         }

@@ -20,6 +20,8 @@ import java.net.URL;
 
 /**
  * Created by JDG on 2018-06-08.
+ * Copyright © 2018 Dennis Jung. All rights reserved.
+ * Email : topsan72@gmail.com / Tel : 1-770-756-0073
  */
 
 public class BaseActivity extends AppCompatActivity {
@@ -78,8 +80,6 @@ public class BaseActivity extends AppCompatActivity {
     public void setActioBar_CustomLayout(int layoutId, int backColorId) {
         try {
             mActionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-            // Set Background color
-            //mActionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(backColorId)));
             // Set layout to ActionBar
             View mCustomView = LayoutInflater.from(this).inflate(layoutId, null);
             mActionBar.setCustomView(mCustomView);

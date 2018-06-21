@@ -17,12 +17,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * Created by Donggeun, Jung on 2018-06-19.
+ * Copyright © 2018 Dennis Jung. All rights reserved.
+ * Email : topsan72@gmail.com / Tel : 1-770-756-0073
+ */
+
 public class MainActivity extends BaseActivity {
     public static MainActivity self = null;
 
     ArrayList<ScheduleData> mArGrid = new ArrayList<ScheduleData>();
-    ArrayList<ScheduleData> mArSchedule = null; //new ArrayList<ScheduleData>();
-    //ArrayList<ScheduleData> mArSchedule = new ArrayList<ScheduleData>();
+    ArrayList<ScheduleData> mArSchedule = null;
+
     GridView mGridWeek;
     WeekInfo mWeekInfo;
     TextView mTextTitle;
@@ -64,7 +70,6 @@ public class MainActivity extends BaseActivity {
     }
 
     public void onGridItemSelected(Point selItem) {
-        //mSelItem = selItem;
         int position = WeekInfo.getPosByItemAxis(selItem.x, selItem.y);
         ScheduleData sd = mArGrid.get(position);
 
@@ -73,19 +78,16 @@ public class MainActivity extends BaseActivity {
 
         // Start Sub Activity & Request result
         startActivityForResult(intent, ACT_SCHEDULE);
-        //startActivity(intent);
     }
 
     public void onClickActionBar(View v) {
         switch ( v.getId() ) {
             case R.id.btnLeft :
                 mWeekInfo.movePrevWeek();
-                //initArraySchedule(true);
                 resetArraySchedule(true);
                 break;
             case R.id.btnRIght :
                 mWeekInfo.moveNextWeek();
-                //initArraySchedule(true);
                 resetArraySchedule(true);
                 break;
         }
@@ -145,11 +147,6 @@ public class MainActivity extends BaseActivity {
                     date = mWeekInfo.getDateOfIndex(j - 1);
                 }
 
-                // 1st Line - Show Day of Week
-                /*if (j > 0 && i == 0) {
-                    //Calendar date = mWeekInfo.getDateOfIndex(j-1);
-                    cellText = DoWName[j - 1] + "\n" + (date.get(Calendar.MONTH) + 1) + "." + date.get(Calendar.DAY_OF_MONTH);
-                }*/
                 // 1st Column - Show Hour
                 if (j == 0 && k >= 0) {
                     cellText = hour + "\n" + strAmPm;
@@ -193,7 +190,6 @@ public class MainActivity extends BaseActivity {
     public void initVariable() {
         mGridWeek = (GridView) findViewById(R.id.gridWeek);
         mTextTitle = (TextView) findViewById(R.id.textTitle);
-        //mArSchedule = mApp.readAllRecords();
 
         mWeekInfo = new WeekInfo();
     }
@@ -242,34 +238,24 @@ public class MainActivity extends BaseActivity {
                             int index = getIndexOfScheduleByDbId(sd.dbId);
                             if (index >= 0)
                                 mArSchedule.remove(index);
-                            //initArraySchedule(true);
                             resetArraySchedule(true);
                             break;
                         }
                         case BaseActivity.FINISH_SAVE: {
                             if (sd == null)
                                 return;
-                            Log.d("tag", "onActivityResult()-1 ");
                             int index = getIndexOfScheduleByDbId(sd.dbId);
-                            Log.d("tag", "onActivityResult()-2 " + index);
                             // New Schedule - Add
                             if (index == -1) {
                                 mApp.addDB(sd);
-                                Log.d("tag", "onActivityResult()-3 " + mArSchedule.size());
-                                //mArSchedule.add(sd);
                                 mApp.refreshScheduleDataList();
-                                Log.d("tag", "onActivityResult()-4 " + mArSchedule.size());
-                                //sd.Tag = mArSchedule.size() - 1;
                             }
                             // Existing Schedule - Update
                             else {
                                 // Update on record from DataBase
                                 mApp.updateDB(sd);
-                                Log.d("tag", "onActivityResult()-5 " + mArSchedule.size());
                                 mArSchedule.set(index, sd);
-                                Log.d("tag", "onActivityResult()-6 " + mArSchedule.size());
                             }
-                            //initArraySchedule(true);
                             resetArraySchedule(true);
                             break;
                         }

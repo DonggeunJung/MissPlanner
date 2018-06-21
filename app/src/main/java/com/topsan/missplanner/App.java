@@ -7,12 +7,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.topsan.missplanner.Utils;
-
 import java.util.ArrayList;
 
 /**
  * Created by JDG on 2018-06-08.
+ * Copyright © 2018 Dennis Jung. All rights reserved.
+ * Email : topsan72@gmail.com / Tel : 1-770-756-0073
  */
 
 public class App extends Application {
@@ -59,7 +59,6 @@ public class App extends Application {
         // Create DBHelper
         mDbHelper = new DbHelper(this);
         mDb = mDbHelper.getWritableDatabase();
-        //readAllRecords();
 
         mAlarmMgr = (AlarmManager)getSystemService(ALARM_SERVICE);
 
@@ -94,14 +93,10 @@ public class App extends Application {
 
     // Read all record from DataBase
     public void readAllRecords(ArrayList<ScheduleData> arSchedule) {
-        //if( ServiceAlarmMngr.self == null )
-        //    return null;
 
         // DB read
         String strQuery = "select _id, title, detail, date, repeatType, alarmType from Schedule";
         Cursor mCursor = mDb.rawQuery(strQuery, null);
-        //ArrayList<ScheduleData> arSchedule = new ArrayList<ScheduleData>();
-        //ServiceAlarmMngr.self.mArSchedule = new ArrayList<ScheduleData>();
 
         // Repeat loop as many as Record count
         for(int i=0; i < mCursor.getCount(); i++) {
@@ -121,23 +116,17 @@ public class App extends Application {
             int alarmType = mCursor.getInt(5);
 
             ScheduleData sd = new ScheduleData(dbId, title, detail, date, repeatType, alarmType);
-            //sd.Tag = i;
             arSchedule.add(sd);
-            //ServiceAlarmMngr.self.mArSchedule.add(sd);
         }
 
-        //return arSchedule;
-        //return ServiceAlarmMngr.self.mArSchedule;
     }
 
     // Read Schedule Records from DataBase
     public void refreshScheduleDataList() {
         if( ServiceAlarmMngr.self == null ) return;
         ServiceAlarmMngr.self.mArSchedule.clear();
-        //ServiceAlarmMngr.self.mArSchedule = null;
 
         readAllRecords(ServiceAlarmMngr.self.mArSchedule);
-
     }
 
 }

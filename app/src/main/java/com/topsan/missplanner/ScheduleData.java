@@ -5,8 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by JDG on 2018-06-18.
- * Data of Schedule
+ * Created by Donggeun, Jung on 2018-06-19.
+ * Copyright © 2018 Dennis Jung. All rights reserved.
+ * Email : topsan72@gmail.com / Tel : 1-770-756-0073
  */
 
 public class ScheduleData implements Serializable {
@@ -28,7 +29,6 @@ public class ScheduleData implements Serializable {
     public Calendar date = null;
     public int repeatType = REPEAT_NONE;
     public int alarmType = ALARM_NONE;
-    //public int Tag = -1;
 
     public ScheduleData() {
 
