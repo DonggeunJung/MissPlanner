@@ -22,3 +22,9 @@ I made this Application for her memorize.
 3. Select Repeat schedule or not every week.
 4. Show Notification(Alarm) before 1 hour of schedule.
 
+
+< Used Android API >
+1. GridView
+2. SQLiteDatabase
+3. Service
+4. Notification
