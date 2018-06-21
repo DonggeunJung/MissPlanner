@@ -20,7 +20,7 @@ import java.util.Calendar;
 public class ServiceAlarmMngr extends Service {
     public static ServiceAlarmMngr self = null;
     protected App mApp = null;
-    public static ArrayList<ScheduleData> mArSchedule = null;
+    public static ArrayList<ScheduleData> mArSchedule = new ArrayList<ScheduleData>();
     final int ALARM_CHECK_INTERVER = 60 * 1000;
 
     static final int NOTI_ID = 1001;
@@ -37,7 +37,8 @@ public class ServiceAlarmMngr extends Service {
         self = this;
 
         mApp = (App) getApplication();
-        mArSchedule = mApp.readAllRecords();
+        //mArSchedule = mApp.readAllRecords();
+        mApp.readAllRecords(mArSchedule);
 
         if( MainActivity.self != null ) {
             MainActivity.self.setAllRecords(mArSchedule);

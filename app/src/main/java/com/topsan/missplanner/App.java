@@ -93,14 +93,14 @@ public class App extends Application {
 
 
     // Read all record from DataBase
-    public ArrayList<ScheduleData> readAllRecords() {
+    public void readAllRecords(ArrayList<ScheduleData> arSchedule) {
         //if( ServiceAlarmMngr.self == null )
         //    return null;
 
         // DB read
         String strQuery = "select _id, title, detail, date, repeatType, alarmType from Schedule";
         Cursor mCursor = mDb.rawQuery(strQuery, null);
-        ArrayList<ScheduleData> arSchedule = new ArrayList<ScheduleData>();
+        //ArrayList<ScheduleData> arSchedule = new ArrayList<ScheduleData>();
         //ServiceAlarmMngr.self.mArSchedule = new ArrayList<ScheduleData>();
 
         // Repeat loop as many as Record count
@@ -126,8 +126,18 @@ public class App extends Application {
             //ServiceAlarmMngr.self.mArSchedule.add(sd);
         }
 
-        return arSchedule;
+        //return arSchedule;
         //return ServiceAlarmMngr.self.mArSchedule;
+    }
+
+    // Read Schedule Records from DataBase
+    public void refreshScheduleDataList() {
+        if( ServiceAlarmMngr.self == null ) return;
+        ServiceAlarmMngr.self.mArSchedule.clear();
+        //ServiceAlarmMngr.self.mArSchedule = null;
+
+        readAllRecords(ServiceAlarmMngr.self.mArSchedule);
+
     }
 
 }

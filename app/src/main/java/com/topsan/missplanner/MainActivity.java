@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -86,57 +87,6 @@ public class MainActivity extends BaseActivity {
                 mWeekInfo.moveNextWeek();
                 //initArraySchedule(true);
                 resetArraySchedule(true);
-                break;
-        }
-    }
-
-    // Sub Activity close event method
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case ACT_SCHEDULE :
-                // When Result is OK
-                if (resultCode == Activity.RESULT_OK) {
-                    int finishType = data.getIntExtra(BaseActivity.FINISH, BaseActivity.FINISH_CANCEL);
-                    ScheduleData sd = (ScheduleData)data.getSerializableExtra(ScheduleData.SCHEDULE);
-
-                    switch (finishType) {
-                        case BaseActivity.FINISH_CANCEL:
-                            return;
-                        case BaseActivity.FINISH_DEL: {
-                            //if( sd == null || sd.Tag == -1 )
-                            if (sd == null)
-                                return;
-                            // Delete one record from DataBase
-                            mApp.delDB(sd.dbId);
-                            int index = getIndexOfScheduleByDbId(sd.dbId);
-                            if (index >= 0)
-                                mArSchedule.remove(index);
-                            //initArraySchedule(true);
-                            resetArraySchedule(true);
-                            break;
-                        }
-                        case BaseActivity.FINISH_SAVE: {
-                            if (sd == null)
-                                return;
-                            int index = getIndexOfScheduleByDbId(sd.dbId);
-                            // New Schedule
-                            if (index == -1) {
-                                mApp.addDB(sd);
-                                mArSchedule.add(sd);
-                                //sd.Tag = mArSchedule.size() - 1;
-                            }
-                            // Existing Schedule
-                            else {
-                                // Update on record from DataBase
-                                mApp.updateDB(sd);
-                                mArSchedule.set(index, sd);
-                            }
-                            //initArraySchedule(true);
-                            resetArraySchedule(true);
-                            break;
-                        }
-                    }
-                }
                 break;
         }
     }
@@ -268,6 +218,64 @@ public class MainActivity extends BaseActivity {
             TextView textView = (TextView)findViewById( textViewId[i] );
             textView.setText(strTitle);
             date.add(Calendar.DAY_OF_MONTH, 1);
+        }
+    }
+
+    // Sub Activity close event method
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case ACT_SCHEDULE :
+                // When Result is OK
+                if (resultCode == Activity.RESULT_OK) {
+                    int finishType = data.getIntExtra(BaseActivity.FINISH, BaseActivity.FINISH_CANCEL);
+                    ScheduleData sd = (ScheduleData)data.getSerializableExtra(ScheduleData.SCHEDULE);
+
+                    switch (finishType) {
+                        case BaseActivity.FINISH_CANCEL:
+                            return;
+                        case BaseActivity.FINISH_DEL: {
+                            //if( sd == null || sd.Tag == -1 )
+                            if (sd == null)
+                                return;
+                            // Delete one record from DataBase
+                            mApp.delDB(sd.dbId);
+                            int index = getIndexOfScheduleByDbId(sd.dbId);
+                            if (index >= 0)
+                                mArSchedule.remove(index);
+                            //initArraySchedule(true);
+                            resetArraySchedule(true);
+                            break;
+                        }
+                        case BaseActivity.FINISH_SAVE: {
+                            if (sd == null)
+                                return;
+                            Log.d("tag", "onActivityResult()-1 ");
+                            int index = getIndexOfScheduleByDbId(sd.dbId);
+                            Log.d("tag", "onActivityResult()-2 " + index);
+                            // New Schedule - Add
+                            if (index == -1) {
+                                mApp.addDB(sd);
+                                Log.d("tag", "onActivityResult()-3 " + mArSchedule.size());
+                                //mArSchedule.add(sd);
+                                mApp.refreshScheduleDataList();
+                                Log.d("tag", "onActivityResult()-4 " + mArSchedule.size());
+                                //sd.Tag = mArSchedule.size() - 1;
+                            }
+                            // Existing Schedule - Update
+                            else {
+                                // Update on record from DataBase
+                                mApp.updateDB(sd);
+                                Log.d("tag", "onActivityResult()-5 " + mArSchedule.size());
+                                mArSchedule.set(index, sd);
+                                Log.d("tag", "onActivityResult()-6 " + mArSchedule.size());
+                            }
+                            //initArraySchedule(true);
+                            resetArraySchedule(true);
+                            break;
+                        }
+                    }
+                }
+                break;
         }
     }
 
