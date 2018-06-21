@@ -47,7 +47,7 @@ public class App extends Application {
     // App close event function
     @Override
     public void onTerminate() {
-        stopService();
+        //stopService();
         super.onTerminate();
     }
 

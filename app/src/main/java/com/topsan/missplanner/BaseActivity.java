@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -92,6 +93,15 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void onClickActionBar(View v) {
+    }
+
+    public void removeStatusBar(boolean remove) {
+        if(remove){
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }else{
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
     }
 
 }
