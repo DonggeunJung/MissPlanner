@@ -1,7 +1,12 @@
+< 소스코드 형상관리 >
+ - Github : https://github.com/DonggeunJung/MissPlanner/
+
+
 < 마켓 등록 >
  - 플레이 스토어 등록
   = 2018.06.21
-
+  = 관리페이지 : https://play.google.com/apps/publish/?hl=ko&account=6283836868323472124#AppDashboardPlace:p=com.topsan.missplanner&appid=4972102760992408650
+  = 플레이 스토어 다운로드 : https://play.google.com/store/apps/details?id=com.topsan.missplanner
 
 
 < 간단한 소개 >
@@ -12,12 +17,42 @@ My hobby is counseling.
 I know a woman who has schizophrenia. 
 I made this Application for her memorize.
 
+저는 재능기부로 상담을 해드리고 있습니다.
+그중에 한분이 조현병을 가지고 계십니다. 
+자신의 기억을 믿지 못하는 분을 위해서 주간 일정관리 앱을(안드로이드) 만들어 보았습니다.
+
+사용된 API는 다음과 같습니다.
+1. GridView
+2. SQLiteDatabase
+3. Service
+4. Notification
+
+위 기능을 iOS로 구현하려면 어떤 API 를 사용해야 할까요?
+안드로이드 소스 프로젝트는 아래 링크에 공개되어 있습니다.
+
+https://github.com/DonggeunJung/MissPlanner/
+
+
+==============================================
 
 
 Author - Dennis Jung
 * Email : topsan72@gmail.com
 * SNS : facebook.com/topofsan
 
+
+< Main functions of this App >
+1. Add, update, or delete schedule.
+2. Show weekly schedules in Table.
+3. Select Repeat schedule or not every week.
+4. Show Notification(Alarm) before 1 hour of schedule.
+
+
+< Used Android API >
+1. GridView
+2. SQLiteDatabase
+3. Service
+4. Notification
 
 
 < 메일 >
