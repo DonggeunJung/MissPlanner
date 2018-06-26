@@ -28,3 +28,12 @@ I made this Application for her memorize.
 2. SQLiteDatabase
 3. Service
 4. Notification
+
+
+< Additional Infomation >
+
+GitHub Link : https://github.com/DonggeunJung/MissPlanner
+
+PlayStore(Google) : https://play.google.com/store/apps/details?id=com.topsan.missplanner
+
+Any question => Email : topsan72@gmail.com / Author : Donggeun Jung (Dennis)
