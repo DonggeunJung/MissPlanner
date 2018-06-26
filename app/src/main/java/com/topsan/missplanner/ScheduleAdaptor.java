@@ -19,6 +19,7 @@ import java.util.ArrayList;
 
 // Adapter class which connect GridView & Data Array
 public class ScheduleAdaptor extends BaseAdapter {
+    public static int CELL_HEIGHT = 0;
 
     Context mContext;
     LayoutInflater mInflater;
@@ -66,6 +67,9 @@ public class ScheduleAdaptor extends BaseAdapter {
                 (TextView)convertView.findViewById(R.id.text1);
         textView1.setText(mArSrc.get(pos).title);
         textView1.setBackgroundColor(backColor);
+
+        if( CELL_HEIGHT < 1 )
+            CELL_HEIGHT = convertView.getHeight();
 
         return convertView;
     }

@@ -28,7 +28,7 @@
         android:visibility="visible"/>
 
     <Button
-        android:id="@+id/btnRIght"
+        android:id="@+id/btnRight"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentRight="true"

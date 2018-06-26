@@ -5,6 +5,8 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -96,6 +98,12 @@ public class ServiceAlarmMngr extends Service {
         Intent intent = new Intent(this, MainActivity.class);
         PendingIntent pIntent = PendingIntent.getActivity(ServiceAlarmMngr.this, 0, intent, 0);
 
+        // Sound URL
+        Uri soundUri= Uri.parse("android.resource://" + getPackageName() + "/"+ R.raw.coin);
+
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+
         // Make Alarm Object
         Notification noti = new Notification.Builder(this)
         // Set Icon
@@ -111,12 +119,16 @@ public class ServiceAlarmMngr extends Service {
         // Set Intent
         .setContentIntent(pIntent)
         // Make Noti Object
+        .setAutoCancel(true)
+        //.setSound(soundUri)
+                //.setSound(alarmSound);
+        .setVibrate(new long[]{0,500,200,500,200,500})  // pattern의 첫번째 파라미터는 wait시간, 두번째는 진동시간(단위 ms)
         .build();
 
         // Use Sound
         noti.defaults |= Notification.DEFAULT_SOUND;
         // When user select Noti, delete Noti.
-        noti.flags |= Notification.FLAG_AUTO_CANCEL;
+        //noti.flags |= Notification.FLAG_AUTO_CANCEL;
 
         // Start Notification
         mNotiMgr.notify(NOTI_ID, noti);
@@ -125,6 +137,7 @@ public class ServiceAlarmMngr extends Service {
     public boolean isScheduleSoon(Calendar dateItem) {
         Calendar dateNow = Calendar.getInstance();
         dateNow.add(Calendar.HOUR_OF_DAY, 1);
+        //dateNow.add(Calendar.MINUTE, 1);
         long timeNow = dateNow.getTimeInMillis();
         long timeItem = dateItem.getTimeInMillis();
 

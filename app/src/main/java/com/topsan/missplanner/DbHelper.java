@@ -21,6 +21,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL("create table Schedule (" +
                 "_id integer PRIMARY KEY autoincrement, " +
                 "title TEXT, detail TEXT, date TEXT, repeatType integer, alarmType integer);");
+                //"title TEXT, detail TEXT, date TEXT, repeatType integer, alarmType integer, alarmDelay integer);");
         }
 
     // DataBase Upgrade event method

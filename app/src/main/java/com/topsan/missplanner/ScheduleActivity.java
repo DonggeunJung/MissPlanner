@@ -4,6 +4,7 @@ import java.util.Calendar;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,7 +21,7 @@ import android.widget.Toast;
  * Email : topsan72@gmail.com / Tel : 1-770-756-0073
  */
 
-public class ScheduleActivity extends AppCompatActivity {
+public class ScheduleActivity extends BaseActivity {
     Button mBtnDel;
     EditText mEditTitle;
     EditText mEditDetail;
@@ -35,6 +36,9 @@ public class ScheduleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
+
+        // Set Custom layout to ActionBar
+        setActioBar_CustomLayout(R.layout.bar_button_button_button, Color.WHITE);
 
         initVariable();
     }
@@ -127,6 +131,20 @@ public class ScheduleActivity extends AppCompatActivity {
         // Regist Intent
         setResult(Activity.RESULT_OK, intent);
         finish();
+    }
+
+    public void onClickActionBar(View v) {
+        switch( v.getId() ) {
+            case R.id.btnSave :
+                onBtnSave(v);
+                break;
+            case R.id.btnDel :
+                onBtnDel(v);
+                break;
+            case R.id.btnCancel :
+                onBtnCancel(v);
+                break;
+        }
     }
 
 }

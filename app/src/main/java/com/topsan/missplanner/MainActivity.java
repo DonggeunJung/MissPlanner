@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +31,7 @@ public class MainActivity extends BaseActivity {
     ArrayList<ScheduleData> mArGrid = new ArrayList<ScheduleData>();
     ArrayList<ScheduleData> mArSchedule = null;
 
-    GridView mGridWeek;
+    GridView mGridWeek = null;
     WeekInfo mWeekInfo;
     TextView mTextTitle;
 
@@ -47,26 +49,13 @@ public class MainActivity extends BaseActivity {
         if( ServiceAlarmMngr.self != null ) {
             setAllRecords( ServiceAlarmMngr.self.mArSchedule );
         }
+        //mTimer_InitGrid.sendEmptyMessageDelayed(0, 500);
     }
 
     public void setAllRecords(ArrayList<ScheduleData> arSchedule) {
         mArSchedule = arSchedule;
         resetArraySchedule(false);
         initGridView();
-    }
-
-    public void initGridView() {
-        ScheduleAdaptor Adapter = new ScheduleAdaptor(this, R.layout.schedule_item, mArGrid);
-        mGridWeek.setAdapter(Adapter);
-
-        mGridWeek.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Point selItem = WeekInfo.getAxisByItemPos(position);
-                if (selItem == null)
-                    return;
-                onGridItemSelected(selItem);
-            }
-        });
     }
 
     public void onGridItemSelected(Point selItem) {
@@ -86,7 +75,7 @@ public class MainActivity extends BaseActivity {
                 mWeekInfo.movePrevWeek();
                 resetArraySchedule(true);
                 break;
-            case R.id.btnRIght :
+            case R.id.btnRight :
                 mWeekInfo.moveNextWeek();
                 resetArraySchedule(true);
                 break;
@@ -113,9 +102,18 @@ public class MainActivity extends BaseActivity {
         showDayTitle();
 
         if( bRefresh ) {
-            ScheduleAdaptor adaptor = (ScheduleAdaptor) mGridWeek.getAdapter();
-            adaptor.notifyDataSetChanged();
+            refreshGridView();
         }
+    }
+
+    public boolean refreshGridView() {
+        if( mGridWeek == null )
+            return false;
+        ScheduleAdaptor adaptor = (ScheduleAdaptor) mGridWeek.getAdapter();
+        if( adaptor == null )
+            return false;
+        adaptor.notifyDataSetChanged();
+        return true;
     }
 
     protected void initArraySchedule() {
@@ -264,5 +262,55 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
+
+    protected void onResume() {
+        super.onResume();
+        scrollGridView( 7 );
+    }
+
+    public void initGridView() {
+        ScheduleAdaptor Adapter = new ScheduleAdaptor(this, R.layout.schedule_item, mArGrid);
+        mGridWeek.setAdapter(Adapter);
+
+        mGridWeek.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Point selItem = WeekInfo.getAxisByItemPos(position);
+                if (selItem == null)
+                    return;
+                onGridItemSelected(selItem);
+            }
+        });
+
+
+    }
+
+    public boolean scrollGridView(int nRowCount) {
+        int nScrollY = 0;
+        View v = mGridWeek.getChildAt(0);
+        if(v != null)
+            nScrollY = (int) v.getTop();
+        else
+            nScrollY = 0;
+
+        //mGridWeek.scrollTo(0, nRowCount * 30);
+        if( ScheduleAdaptor.CELL_HEIGHT > 0 ) {
+            mGridWeek.scrollTo(0, nRowCount * ScheduleAdaptor.CELL_HEIGHT);
+            //mGridWeek.setSelectionFromTop(nRowCount, nScrollY);
+        }
+        else {
+            return false;
+        }
+
+        return refreshGridView();
+    }
+
+    Handler mTimer_InitGrid = new Handler() {
+        public void handleMessage(Message msg) {
+            boolean bSuccess = scrollGridView( 7 );
+
+            if( bSuccess == false )
+                mTimer_InitGrid.sendEmptyMessageDelayed(0, 50);
+        }
+    };
 
 }

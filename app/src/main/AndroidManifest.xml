@@ -26,11 +26,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light">
         </activity>
+
         <activity
             android:name=".ScheduleActivity"
             android:label="Schedule Edit"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/Theme.AppCompat.Light" />
 
         <service android:name=".ServiceAlarmMngr" />
 
