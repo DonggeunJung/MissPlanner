@@ -136,8 +136,8 @@ public class ServiceAlarmMngr extends Service {
 
     public boolean isScheduleSoon(Calendar dateItem) {
         Calendar dateNow = Calendar.getInstance();
-        dateNow.add(Calendar.HOUR_OF_DAY, 1);
-        //dateNow.add(Calendar.MINUTE, 1);
+        //dateNow.add(Calendar.HOUR_OF_DAY, 1);
+        dateNow.add(Calendar.MINUTE, 1);
         long timeNow = dateNow.getTimeInMillis();
         long timeItem = dateItem.getTimeInMillis();
 
